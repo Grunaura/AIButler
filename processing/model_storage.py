@@ -1,42 +1,44 @@
 # model_storage.py
-# Author: Adam Messick
-# Date: May 22, 2023
+# Adam Messick
+# Date: 2023-05-22
 
-import pickle
+import joblib
 import redis
+from datetime import datetime
 
 class ModelStorage:
+    def __init__(self, host='localhost', port=6379, db=0):
+        self.client = redis.StrictRedis(host=host, port=port, db=db)
 
-    def __init__(self):
-        # Connect to local Redis instance
-        self.redis_instance = redis.StrictRedis(host="localhost", port=6379, db=0)
-
-    def store_model(self, model, model_name):
-        try:
-            # Use pickle to serialize the model object
-            pickled_model = pickle.dumps(model)
-            # Store the serialized model in Redis
-            self.redis_instance.set(model_name, pickled_model)
-            print(f"Model {model_name} stored successfully.")
-        except Exception as e:
-            print(f"An error occurred while storing the model: {e}")
+    def store_model(self, model, model_name, model_type):
+        versioned_model_name = self._version_model_name(model_name)
+        serialized_model = joblib.dumps((model, model_type))
+        self.client.set(versioned_model_name, serialized_model)
 
     def retrieve_model(self, model_name):
-        try:
-            # Retrieve the serialized model from Redis
-            pickled_model = self.redis_instance.get(model_name)
-            # Use pickle to deserialize the model object
-            model = pickle.loads(pickled_model)
-            print(f"Model {model_name} retrieved successfully.")
-            return model
-        except Exception as e:
-            print(f"An error occurred while retrieving the model: {e}")
+        versioned_model_name = self._get_latest_version_model_name(model_name)
+        if versioned_model_name is None:
+            raise Exception(f"No stored versions found for model name: {model_name}")
+        serialized_model = self.client.get(versioned_model_name)
+        model, model_type = joblib.loads(serialized_model)
+        return model, model_type
+
+    def _version_model_name(self, model_name):
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        return f"{model_name}:{timestamp}"
+
+    def _get_latest_version_model_name(self, model_name):
+        versioned_model_names = [k.decode() for k in self.client.keys() if k.decode().startswith(model_name)]
+        if not versioned_model_names:
+            return None
+        return sorted(versioned_model_names, reverse=True)[0]
 
 
-# Test the ModelStorage class
+# Testing
 if __name__ == "__main__":
+    import sklearn.dummy
     model_storage = ModelStorage()
-    dummy_model = {"model": "This is a dummy model"}
-    model_storage.store_model(dummy_model, "dummy_model")
-    retrieved_model = model_storage.retrieve_model("dummy_model")
-    print(retrieved_model)
+    dummy_model = sklearn.dummy.DummyClassifier()
+    model_storage.store_model(dummy_model, 'dummy', 'sklearn')
+    retrieved_model, model_type = model_storage.retrieve_model('dummy')
+    print(f"Retrieved model of type: {model_type}")
