@@ -4,7 +4,7 @@ Artificial Intelligence-Based Utility for Transformative Learning and Efficient 
 
 ## Description 
 
-AI-BUTLER represents a groundbreaking initiative in the AI field, constructed to extract and utilize the capabilities of a range of AI systems to fulfil targeted aims. It's engineered to progressively boost its performance as it digests and comprehends more information, learning and modifying its behavior in response to new assignments and data.
+AI-BUTLER proof of concept in the realm of generative artificial intelligence. This project is designed to harness and leverage the strengths of multiple AI systems to achieve specific objectives. It's built to incrementally enhance its performance by digesting and understanding more data, learning and adjusting its actions in response to fresh tasks and diverse data sources. The overarching goal of this project is to initially absorb basic functionality from other AI models, and subsequently use that acquired knowledge for independent learning. The project is intended to serve as a proof of concept in the exploration of AI's capacity for autonomous learning.
 
 ## Installation
 
