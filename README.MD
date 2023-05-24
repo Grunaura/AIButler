@@ -12,7 +12,9 @@ To install AI-BUTLER, you'll need Python 3.8 or later and pip. Once you have the
 
 
 git clone https://github.com/Grunaura/AI-Butler.git
+
 cd AI-BUTLER
+
 pip install -r requirements.txt
 
 Usage
