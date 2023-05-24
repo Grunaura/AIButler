@@ -4,7 +4,7 @@ Artificial Intelligence-Based Utility for Transformative Learning and Efficient 
 
 ## Description 
 
-AI-BUTLER is an AI project designed to harness the power of different AI models and systems like GPT-4, Llama, MPT-7B, BabyAGI, and AgentGPT to achieve specific goals. This AI system is intended to improve its performance as it processes more information, continuously learning and adapting to new tasks and data.
+AI-BUTLER represents a groundbreaking initiative in the AI field, constructed to extract and utilize the capabilities of a range of AI systems to fulfil targeted aims. It's engineered to progressively boost its performance as it digests and comprehends more information, learning and modifying its behavior in response to new assignments and data.
 
 ## Installation
 
