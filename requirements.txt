@@ -1,22 +1,31 @@
 # Data Processing Libraries
+numpy>=1.19.2
 pandas>=1.0.0
-numpy>=1.18.0
 scipy>=1.4.1
 
 # Natural Language Processing Libraries
-nltk>=3.4.5
+nltk>=3.5
+tensorflow>=2.4.0
 spacy>=2.2.3
 gensim>=3.8.1
 
 # Machine Learning Libraries
-scikit-learn>=0.22.1
-tensorflow>=2.0.0
+sklearn>=0.24.1
+keras>=2.4.3
 torch>=1.4.0
 torchvision>=0.5.0
 
+# Database Libraries
+redis>=3.5.3
+joblib>=1.0.1
+
 # Vector Database/Search Libraries
-faiss-cpu>=1.6.1  # Use faiss-gpu if you have a compatible GPU
-annoy>=1.16.3
+faiss-cpu>=1.7.0  # Use faiss-gpu if you have a compatible GPU
+annoy>=1.17.0
 
 # Other Utilities
 tqdm>=4.41.1
+
+# Project Specific Libraries
+langchain>=1.0.0  # Assuming langchain is a python library available on PyPI
+serpapi>=1.0.0  # Assuming serpapi is a python library available on PyPI
