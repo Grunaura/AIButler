@@ -1,20 +1,9 @@
-"""
-learning_model.py
-
-This module provides a more complex machine learning model for text generation, 
-using the Keras Sequential API to create a transformer-based generative model.
-
-Functions:
-- create_model(): Creates and returns a transformer model.
-- train_model(model, X_train, y_train): Trains the model on the provided training data.
-- generate_text(model, start_string): Generates text using the trained model.
-"""
-
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, LSTM, Dense
 from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from processing.text_processing import process_text
+from gensim.models import Word2Vec  # Import the Gensim library
 import tensorflow_datasets as tfds
 import tensorflow as tf
 import numpy as np
@@ -67,23 +56,17 @@ def generate_text(model, start_string):
 
     return (start_string + ''.join(text_generated))
 
+# Add the new function for training a Word2Vec model
+def train_word2vec_model(sentences):
+    """Train a Word2Vec model with the provided sentences using Gensim."""
+    try:
+        model = Word2Vec(sentences, vector_size=100, window=5, min_count=1, workers=4)
+        model.train(sentences, total_examples=len(sentences), epochs=10)
+        return model
+    except Exception as e:
+        print(f"An error occurred while training the Word2Vec model: {e}")
+
 if __name__ == "__main__":
     vocab = sorted(set(data))
     char2idx = {u:i for i, u in enumerate(vocab)}
-    idx2char = np.array(vocab)
-
-    text_as_int = np.array([char2idx[c] for c in data])
-    char_dataset = tf.data.Dataset.from_tensor_slices(text_as_int)
-
-    sequences = char_dataset.batch(MAX_LENGTH+1, drop_remainder=True)
-
-    def split_input_target(chunk):
-        input_text = chunk[:-1]
-        target_text = chunk[1:]
-        return input_text, target_text
-
-    dataset = sequences.map(split_input_target)
-
-    model = create_model(vocab_size = len(vocab), embedding_dim=256, units=1024)
-    train_model(dataset, model, epochs=30)
-    print(generate_text(model, start_string="Enter some text here"))
+    idx2char = np.array(vocab
