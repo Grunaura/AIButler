@@ -1,18 +1,6 @@
-"""
-text_processing.py
-
-This module provides functions for cleaning, tokenizing, and lemmatizing English text.
-
-Functions:
-- clean_text(text): Removes non-alphabetic characters and converts to lowercase.
-- tokenize_text(text): Tokenizes the text into words.
-- remove_stopwords(tokenized_text): Removes common English stopwords.
-- lemmatize_text(tokenized_text): Lemmatizes the tokens (get the base form of each word).
-- process_text(text): Performs all the above steps in order.
-"""
-
 import argparse
 import nltk
+import spacy  # Import the Spacy library
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -52,6 +40,19 @@ def process_text(text):
     lemmatized_text = lemmatize_text(filtered_text)
     return lemmatized_text
 
+# Add the new function for named entity recognition
+def perform_ner(text):
+    """Perform named entity recognition on the text using Spacy."""
+    # Load the English model from Spacy
+    nlp = spacy.load('en_core_web_sm')
+
+    # Process the text
+    doc = nlp(text)
+
+    # Extract entities and their types
+    entities = [(ent.text, ent.label_) for ent in doc.ents]
+    return entities
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some text.')
     parser.add_argument('text', type=str, help='The text to process')
@@ -59,4 +60,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     processed_text = process_text(args.text)
-    print(processed_text)
+    ner_results = perform_ner(args.text)
+    
+    print("Processed Text:", processed_text)
+    print("NER Results:", ner_results)
