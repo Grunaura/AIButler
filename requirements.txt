@@ -1,13 +1,38 @@
+# requirements.txt
+#
+# Adam Messick
+# Date: 05/24/2023
+#
+# This file lists all the Python packages required for the project.
+#
+# You can install all these packages by running:
+# pip install -r requirements.txt
+
+# Flask web framework
+Flask==2.0.1
+
+# Flask's extension for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible.
+Flask-Cors==3.0.10
+
+# HTTP library
+requests==2.25.1
+
+# HTML parsing library
+beautifulsoup4==4.9.3
+
+# Library for making HTTP requests simpler and more human-friendly.
+httpx==0.18.2
+
+# Natural Language Processing Libraries
+nltk>=3.6.2
+tensorflow>=2.4.0
+spacy>=2.2.3
+gensim>=3.8.1
+
 # Data Processing Libraries
 numpy>=1.19.2
 pandas>=1.0.0
 scipy>=1.4.1
-
-# Natural Language Processing Libraries
-nltk>=3.5
-tensorflow>=2.4.0
-spacy>=2.2.3
-gensim>=3.8.1
 
 # Machine Learning Libraries
 sklearn>=0.24.1
@@ -25,6 +50,12 @@ annoy>=1.17.0
 
 # Other Utilities
 tqdm>=4.41.1
+
+# Library for managing environment settings
+python-dotenv==0.17.1
+
+# OpenAI's API client library
+openai==0.27.0
 
 # Project Specific Libraries
 langchain>=1.0.0  # Assuming langchain is a python library available on PyPI
